@@ -9,7 +9,7 @@ The Natural Scene derived Spatial Frequency Response (NS-SFR) framework automati
 Alongside this self-executable, several MATLAB tools are also provided that will assist with NS-SFRs and estimated e-SFRs from natural scenes. A manual ROI selection GUI is provided for test chart comparisons. In addition, two scene classification tools are provided. The first is an automated method, based on a retrained AlexNet, which labels images based on their general environment (Man-made, Indoor or Nature). The second is a manual method of scene classification, using a GUI to cycle through a dataset of images, allowing you to label the main light source, the primary image subject and the general environment (Man-made, Indoor or Nature). 
 For detail on this proposed workflow, please see:
 
-O. van Zwanenberg, S. Triantaphillidou, and R. B. Jenkin, “A Tool for Deriving Camera Spatial Frequency Response from Natural Scenes (NS-SFR)” IS&T International Symposium on Electronic Imaging: Image Quality and System Performance XX, 2020. – pending publication
+O. van Zwanenberg, S. Triantaphillidou, and R. B. Jenkin, “A Tool for Deriving Camera Spatial Frequency Response from Natural Scenes (NS-SFR)” IS&T International Symposium on Electronic Imaging: Image Quality and System Performance XX, 2023. – *pending publication*
 
 O. van Zwanenberg, S. Triantaphillidou, R. B. Jenkin, and A. Psarrou, “Estimation of ISO12233 Edge Spatial Frequency Response from Natural Scene Derived Step-Edge Data” Journal of Imaging Science and Technology (JIST), Volume 65, Number 6, November 2021, pp. 60402-1-60402-16(16). https://doi.org/10.2352/J.ImagingSci.Technol.2021.65.6.060402 
 
