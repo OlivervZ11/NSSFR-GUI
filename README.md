@@ -179,9 +179,13 @@ This is a very time-consuming task and, thus, has been programmed to allow you t
   
 <img src="Images/Figure12.png" width="450">  <sub> Figure 12 – *imSortGUI.m* popup window gives the option to continue building a previous imSort or start a new dataset. </sub>
   
-Next, you will need to state if the images are RAW (.dng) files or TIFF (.tif) files (Figure 13), and then select the directory of the dataset. The GUI will then open, displaying the first image. Select the general environment (Man-made, Indoor or Nature). Then type in the main light source and the primary image subject if the correct label is not in the drop-down. Pressing next will add any new labels to the drop-down options. Only select ‘Other’ from the drop-down to type in a new label. 
+If you answered ‘start a new dataset’, a pop-up will then ask whether you want to upload dropdown options (Figure 13). This is to upload a file called *Dropdowns.mat* that contains the dropdown names used for another dataset, i.e., if using imSort on many different datasets, you do not need to keep typing in your specific lighting/location names.
+ 
+<img src="Images/Figure13.png" width="300">  <sub> Figure 13 – *imSortGUI.m* pop-up window gives the option to upload previously used dropdown names. </sub>
   
-<img src="Images/Figure13.png" width="300">  <sub> Figure 13 – *imSortGUI.m* window that indicates if the dataset contains RAW or TIFF images. </sub>
+Next, you will need to state if the images are RAW (.dng) files or TIFF (.tif) files (Figure 14), and then select the directory of the dataset. The GUI will then open, displaying the first image. Select the general environment (Man-made, Indoor or Nature). Then type in the main light source and the primary image subject if the correct label is not in the dropdown. Pressing next will add any new labels to the dropdown options. Only select ‘Other’ from the dropdown to type in a new label. 
+  
+<img src="Images/Figure14.png" width="300">  <sub> Figure 14 – *imSortGUI.m* window that indicates if the dataset contains RAW or TIFF images. </sub>
   
 Once you finish the set of images, you will be asked to save and select a directory. A .xlsx file will be saved containing three sheets. The first will be a list of image filenames with labels. The second sheet contains the total distribution of the primary image subject and the distribution of primary subjects across Man-made, Indoor and Nature. The third sheet contains the total distribution of the main light source and the distribution of the main light source across Man-made, Indoor and Nature.
 
