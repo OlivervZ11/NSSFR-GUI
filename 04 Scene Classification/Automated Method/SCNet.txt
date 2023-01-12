@@ -1,0 +1,3 @@
+Dowload The retrained AlexNet via the Google Drive link: https://drive.google.com/file/d/186iy8TzUvvTyn0BMcuqhR2vs7n0_QZlM/view?usp=sharing
+
+File size is 202MB
