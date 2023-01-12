@@ -1,0 +1,3 @@
+Intall the NS-SGR GUI software, using the interlation file, found in '01 NS-SFR GUI'. There are two versions, one for Windows OS and the other is for MacOS. To open the prototype software double clipck on the NSSFR_GUI file. 
+
+To run the MATLAB code, bring foulders '02 NS-SFR MATLAB Code', '03 Manual ROI Selection' and '04 Scene Classification' into the MATLAB directory, they share some functions. 
