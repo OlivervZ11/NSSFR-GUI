@@ -9,7 +9,7 @@ The Natural Scene derived Spatial Frequency Response (NS-SFR) framework automati
 Alongside this self-executable, several MATLAB tools are also provided that will assist with NS-SFRs and estimated e-SFRs from natural scenes. A manual ROI selection GUI is provided for test chart comparisons. In addition, two scene classification tools are provided. The first is an automated method, based on a retrained AlexNet, which labels images based on their general environment (Man-made, Indoor or Nature). The second is a manual method of scene classification, using a GUI to cycle through a dataset of images, allowing you to label the main light source, the primary image subject and the general environment (Man-made, Indoor or Nature). 
 For detail on this proposed workflow, please see:
 
-O. van Zwanenberg, S. Triantaphillidou, and R. B. Jenkin, “A Tool for Deriving Camera Spatial Frequency Response from Natural Scenes (NS-SFR)” IS&T International Symposium on Electronic Imaging: Image Quality and System Performance XX, 2023. – *pending publication*
+O. van Zwanenberg, S. Triantaphillidou, and R. B. Jenkin, “A Tool for Deriving Camera Spatial Frequency Response from Natural Scenes (NS-SFR)” IS&T International Symposium on Electronic Imaging: Image Quality and System Performance XX, 2023. – [DOI:10.2352/EI.2023.35.8.IQSP-311](https://library.imaging.org/ei/articles/35/8/IQSP-311)
 
 O. van Zwanenberg, S. Triantaphillidou, R. B. Jenkin, and A. Psarrou, “Estimation of ISO12233 Edge Spatial Frequency Response from Natural Scene Derived Step-Edge Data” Journal of Imaging Science and Technology (JIST), Volume 65, Number 6, November 2021, pp. 60402-1-60402-16(16). https://doi.org/10.2352/J.ImagingSci.Technol.2021.65.6.060402 
 
@@ -25,6 +25,11 @@ O. van Zwanenberg, S. Triantaphillidou, R. B. Jenkin, and A. Psarrou, “Edge De
 
 O. van Zwanenberg, “Camera Spatial Frequency Response Derived from Pictorial Natural Scenes,” University of Westminster, 2022. https://doi.org/10.34737/vvqxq 
 ## Self-Executable User-Interface Prototype
+### Updates September 2023
++ Fix to reported bugs in the code
++ Updated to use sframt5, instead of sfrmat4 [^3]
++ Allow JPEG and PNG file formats to be uploaded, in addition to the RAW and TIFF
+
 ### 1. Measurement
 
 You will be presented with the Measurement tab when opening the guided user interface (GUI). In this tab, the methodology parameters are set, and the image dataset’s directory and the directory where the data will be saved are selected. 
@@ -84,7 +89,7 @@ Once processing starts, you will be automatically taken to the Processing tab. T
 
 There are two parts to the action ‘Estimate the system e-SFR’. Part 1 will take the most time. The first message will be “Initialising…”, setting up the CPU cores, and then “Processing...” (Figure 4). A progress bar will appear as a popup window, providing an approximate completion time. 
 
-Part 1 is the extraction and verification of pictorial natural scene step-edges, which then pass the e-SFR algorithm to produce NS-SFRs. Burns’ sfrmat4 code [^3] was adapted for this purpose. The software will output MATLAB .m data files to the directory selected to save the data. These files contain the NS-SFRs and data used for the e-SFR estimation. 
+Part 1 is the extraction and verification of pictorial natural scene step-edges, which then pass the e-SFR algorithm to produce NS-SFRs. Burns’ sfrmat5 code [^3] was adapted for this purpose. The software will output MATLAB .m data files to the directory selected to save the data. These files contain the NS-SFRs and data used for the e-SFR estimation. 
 
 Once Part 1 is completed, Part 2 will be highlighted, and the processing will begin. This second stage should not take as long to complete, calculating the system e-SFR estimates across the radial annuli and a global weighted average. The output is one MATLAB .m file containing the system e-SFR estimation.
   
@@ -147,7 +152,7 @@ After selecting the directory, MATLAB will read the images. Once the images are 
   
 <img src="Images/Figure10.png" width="850">  <sub> Figure 10 – ROI Selection GUI </sub>
   
-The e-SFRs will be calculated using Burns’ *sfrmat4* code [^3]. 
+The e-SFRs will be calculated using Burns’ *sfrmat5* code [^3]. 
 After completing the selection process, push next one last time, the GUI will close, and you will be asked to select a directory to save the data. A MAT file will be saved containing all data ( *eSFR_Estimation.mat* ), and either two or six .xlsx files will be saved. If TIFF images were used, two .xlsx files are saved ( *ISO12233eSFR_Horizontal.xlsx* and *ISO12233eSFR_Vertical.xlsx* ). If RAW image test chart captures were used, there would be three .xlsx files for each orientation, providing the e-SFRs for each mosaiced colour channel (R, G and B). 
 
 Future iterations of the e-SFR estimation GUI should have this test chart ROI selection tool built-in. 
@@ -192,5 +197,5 @@ Once you finish the set of images, you will be asked to save and select a direct
 ## References
 [^1]: British Standard Institute, “BS ISO 12233:2017 Photography - Electronic still picture imaging -Resolution and spatial frequency responses,” BSI Standards Publication, pp. 1–62, 2017.
 [^2]: R. Jenkin and P. Kane, “Fundamental Imaging System Analysis for Autonomous Vehicles,” in Autonomous Vehicles and Machines Conference, 2018, vol. 2018, no. 17, pp. 105-1-105–10, doi: 10.2352/issn.2470-1173.2018.17.avm-105.
-[^3]: P. D. Burns, “sfrmat4 source code,” Burns Digital Imaging, 2020. http://burnsdigitalimaging.com/software/sfrmat/ (accessed Jan. 03, 2023).
+[^3]: P. D. Burns, “sfrmat5 source code,” Burns Digital Imaging, 2023. http://burnsdigitalimaging.com/software/sfrmat/ (accessed Sep. 17, 2023).
 [^4]: A. Krizhevsky, I. Sutskever, and G. E. Hinton, “ImageNet Classification with Deep Convolutional Neural Networks,” Advances in neural information processing systems, vol. 1, pp. 1097–1105, 2012.
