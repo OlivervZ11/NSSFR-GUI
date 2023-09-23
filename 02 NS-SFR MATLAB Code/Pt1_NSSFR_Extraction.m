@@ -12,7 +12,7 @@ clc; close all;
 % Varibles
 % Contrast Range 
 Con=[0.55, 0.65]; 
-% isStepEdege zeros gradient value 
+% isStepEdge zeros gradient value 
 ST   = 0.02;
 % ESF min width for system (pixels) - Change this threshold based on
 % a modeled MTF - pixels for no overlapping ESFs
@@ -20,15 +20,28 @@ esfW = 5;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% ----- READ FILES ----- %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% RAW(.dng) or TIFF(.tif)? 
+% RAW(.dng) or TIFF(.tif) or PNG(.png) or JPEG(.jpg)? 
 answer = questdlg('Image Dataset File Format', ...
 	'Data', ...
-	'RAW(.dng)','TIFF(.tif)', 'RAW(.dng)');
+	'RAW(.dng)','Other', 'RAW(.dng)');
 switch answer
     case 'RAW(.dng)' 
         raw = 1;
-    case 'TIFF(.tif)'
-        raw = 0;
+    case 'Other'
+        raw = 0; 
+end
+if raw==0
+    answer = questdlg('Image Dataset File Format', ...
+	    'Data', ...
+	    'TIFF(.tif)', 'PNG(.png)', 'JPEG(.jpg)', 'TIFF(.tif)');
+    switch answer
+        case 'TIFF(.tif)'
+            ft = 1;
+        case 'PNG(.png)'
+            ft = 2;
+        case 'JPEG(.jpg)'
+            ft = 3;
+    end
 end
 
 % Read image file names from user Folder
@@ -36,7 +49,13 @@ selpath = uigetdir([], 'Select folder conatining image dataset');
 if raw == 1
     imfiles=dir(fullfile([selpath '\*.dng']));
 else
-    imfiles=dir(fullfile([selpath '\*.tif']));
+    if ft ==1
+        imfiles=dir(fullfile([selpath '\*.tif']));
+    elseif ft == 2
+        imfiles=dir(fullfile([selpath '\*.png']));
+    elseif ft == 3
+        imfiles=dir(fullfile([selpath '\*.jpg']));
+    end
 end
 
 % imnumber stores the number of files that have been read
@@ -120,17 +139,25 @@ for A=1:imnumber
         % TIFF files require linerisation
         if raw ==0
             % Extract Image Metadata and Stats
-            ImageInfo=ImInfo(imfiles, A, Im);
+            % ImageInfo=ImInfo(imfiles, A, Im); % NIKON FILE SPESIFCIC -
+            % ERROR OCCURS WHEN NO METADATA
+            ImageInfo=[];
 
-            % Determine the Colour Space
-            ColourSpace=ImageInfo.ColourSpace;
+           % Determine the Colour Space
+            if isempty(ImageInfo)==0
+                ColourSpace=ImageInfo.ColourSpace;
+            else 
+                % assume RGB
+                ColourSpace = 'RGB';
+            end
             % Linearize the ime acording to the Colour Space
             if isequal(ColourSpace ,'sRGB')
                 Im_lin=rgb2lin(Im,'ColorSpace', 'sRGB');
             elseif isequal(ColourSpace ,'RGB')
                 Im_lin=rgb2lin(Im,'ColorSpace', 'adobe-rgb-1998');
             else
-                Im_lin=rgb2lin(Im,'ColorSpace', 'sRGB');
+                % assume RGB
+                Im_lin=rgb2lin(Im,'ColorSpace', 'adobe-rgb-1998');
             end
         else
              ImageInfo=[];
@@ -183,8 +210,10 @@ for A=1:imnumber
                         ROI=ROI(1:end-1,:);
                         mask=mask(1:end-1,:);
                     end
-                    [~, dat, ~, ~, R{a,2}, ~, ~, ~, R{a,6}, R{a,7}] = ...
-                        sfrmat4M(1, 1, 3, [.299, .587, .114], ROI, mask, 1);
+%                     [~, dat, ~, ~, R{a,2}, ~, ~, ~, R{a,6}, R{a,7}] = ...
+%                         sfrmat4M(1, 1, 3, [.299, .587, .114], ROI, mask, 1);
+                    [~, dat, ~, ~, ~, R{a,2}, ~, ~, ~, R{a,6}, R{a,7}, ~] = ...
+                        sfrmat5M(1, 1, ROI, mask,5);
 
                     if ~isempty(dat)
                         if ~isnan(dat(:,end))

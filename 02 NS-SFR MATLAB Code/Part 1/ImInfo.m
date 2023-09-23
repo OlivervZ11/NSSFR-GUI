@@ -22,36 +22,45 @@ if dim==3
 end
 %Extract Image Mettadata
 MD=imfinfo(fullfile(imfiles(A).folder, imfiles(A).name));
-MD2=MD.DigitalCamera;
+if isfield(MD, 'DigitalCamera')==1
+    MD2=MD.DigitalCamera;
+        
+    if isfield(MD2, 'UnknownTags')
+        MD3=MD2.UnknownTags;
+        MD3=struct2cell(MD3);
+        Lens=MD3{end,end};
+    else
+        Lens=[];
+    end 
+    %Calculate the Stats
     
-if isfield(MD2, 'UnknownTags')
-    MD3=MD2.UnknownTags;
-    MD3=struct2cell(MD3);
-    Lens=MD3{end,end};
-else
-    Lens=[];
+    h=imhist(Im);
+    mn=mean2(Im);
+    st=std2(Im);
+    va=(st)^2;
+    mode=(find(h==(max(h))))-1;
+    med=median(double(Im(:)));
+    maximum=max(Im(:));
+    minimum=min(Im(:));
+        
+    %Place results in Structure Array
+    if isfield(MD, 'Model')==0
+        MD.Model=[];
+        MD2.FNumber = [];
+        MD2.ISOSpeedRatings = [];
+        MD2.ExposureTime= [];
+        MD2.FocalLength= [];
     end
-%Calculate the Stats
-
-h=imhist(Im);
-mn=mean2(Im);
-st=std2(Im);
-va=(st)^2;
-mode=(find(h==(max(h))))-1;
-med=median(double(Im(:)));
-maximum=max(Im(:));
-minimum=min(Im(:));
-    
-%Place results in Structure Array
-if isfield(MD, 'Model')==0
-    MD.Model=[];
-    MD2.FNumber = [];
-    MD2.ISOSpeedRatings = [];
-    MD2.ExposureTime= [];
-    MD2.FocalLength= [];
+    % Color Space
+    if isfield(MD, 'ColorSpace')==1
+        CS = MD2.ColorSpace;
+    else 
+          CS = [];
+    end
+    ImageInfo = struct('Name', FileName, 'FilePath', PathName, 'CameraModel', MD.Model, 'LensModel', Lens, 'FileSize', MD.FileSize, 'ImageFormat', MD.Format, 'ColourSpace', CS, 'ColourType', MD.ColorType, 'Hight', MD.Height, 'Width', MD.Width, 'BitDepth', MD.BitDepth, 'ApertureFNumber', MD2.FNumber, 'ISOSpeedRating', MD2.ISOSpeedRatings, 'ShutterSpeed', MD2.ExposureTime, 'FocalLength', MD2.FocalLength, 'MeanValue', mn, 'StandardDeviation', st,'Variation', va,'Mode', mode,'Median', med,'MaximumValue', maximum,'MinimumValue', minimum);
+    % ImageInfo = struct('ColourSpace', MD2.ColorSpace, 'ColourType', MD.ColorType);
+else
+    ImageInfo = [];
 end
-ImageInfo = struct('Name', FileName, 'FilePath', PathName, 'CameraModel', MD.Model, 'LensModel', Lens, 'FileSize', MD.FileSize, 'ImageFormat', MD.Format, 'ColourSpace', MD2.ColorSpace, 'ColourType', MD.ColorType, 'Hight', MD.Height, 'Width', MD.Width, 'BitDepth', MD.BitDepth, 'ApertureFNumber', MD2.FNumber, 'ISOSpeedRating', MD2.ISOSpeedRatings, 'ShutterSpeed', MD2.ExposureTime, 'FocalLength', MD2.FocalLength, 'MeanValue', mn, 'StandardDeviation', st,'Variation', va,'Mode', mode,'Median', med,'MaximumValue', maximum,'MinimumValue', minimum);
-% ImageInfo = struct('ColourSpace', MD2.ColorSpace, 'ColourType', MD.ColorType);
-
 
 

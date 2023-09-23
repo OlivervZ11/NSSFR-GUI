@@ -17,7 +17,7 @@ Ang=[2.5, 42.5];
 RDseg=3;
 % Percentile of the LSF half peak width distribution to be used in the 
 % sys-SFR estimation
-Percentile = 20; % Top 10th percentile of sharpest edges per RDseg
+Percentile = 10; % Top 10th percentile of sharpest edges per RDseg
 Percentile2=[];
 
 % Thresholds
